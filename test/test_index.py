@@ -1,5 +1,5 @@
 import pytest
-from ipynb.fs.full.index import open_restuarants, cheapest_restaurant, most_reviewed, highest_rated, fork_fig_rating_relevance, frontier_restaurant_rating_relevance
+from ipynb.fs.full.index import fork_fig, frontier_restaurant, open_restaurants, cheapest_restaurant, most_reviewed, highest_rated, fork_fig_rating_relevance, frontier_restaurant_rating_relevance
 
 def test_open_restaurants():
     assert type(open_restaurants) == type([])
