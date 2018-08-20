@@ -1,133 +1,141 @@
 
 # Conditionals in Python Lab
 
-### Introduction
+## Introduction
 
-In our earlier lab on functional arguments, we found ways to work with Yelp to find and compare restaurants. In this lesson, we'll add more complex methods now that we know about conditionals.
+Alright, now that we have seen how to use condtionals, let's put them to use. We'll use some data from restaurants on yelp to decide where we want to eat and we'll use conditionals to help us do that.
 
-### Again, our two restaurants in Albuquerque
+## Objectives
+* Use conditionals to assert if an element passes a certain condition
+* Combine conditionals and loops to return a list of elements that pass a certain condition
 
-Let's take another look at our data for a single restaurant.  Once again, we have data regarding the Fork and Fig restaurant.
+## Instructions
+
+Let's take a look at some data about restaurants we retrieved from Yelp. We will use these restaurants later with our conditional statemtents.
 
 
 ```python
-fork_fig = {'categories': [{'alias': 'burgers', 'title': 'Burgers'},
-  {'alias': 'sandwiches', 'title': 'Sandwiches'},
-  {'alias': 'salad', 'title': 'Salad'}],
- 'coordinates': {'latitude': 35.10871, 'longitude': -106.56739},
+fork_fig = {
  'display_phone': '(505) 881-5293',
- 'distance': 3571.724649307866,
  'id': 'fork-and-fig-albuquerque',
  'image_url': 'https://s3-media1.fl.yelpcdn.com/bphoto/_-DpXKfS3jv6DyA47g6Fxg/o.jpg',
  'is_closed': False,
- 'location': {'address1': '6904 Menaul Blvd NE',
-  'address2': 'Ste C',
-  'address3': '',
-  'city': 'Albuquerque',
-  'country': 'US',
-  'display_address': ['6904 Menaul Blvd NE', 'Ste C', 'Albuquerque, NM 87110'],
-  'state': 'NM',
-  'zip_code': '87110'},
  'name': 'Fork & Fig',
  'phone': '+15058815293',
  'price': '$$',
  'rating': 4.5,
  'review_count': 604,
- 'transactions': [],
- 'url': 'https://www.yelp.com/biz/fork-and-fig-albuquerque?adjust_creative=SYc8R4Gowqru5h4SBKZXsQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=SYc8R4Gowqru5h4SBKZXsQ'}
-```
+}
 
-And here is the data representing Frontier Restaurant.
-
-
-```python
-frontier_restaurant = {'categories': [{'alias': 'mexican', 'title': 'Mexican'},
-  {'alias': 'diners', 'title': 'Diners'},
-  {'alias': 'tradamerican', 'title': 'American (Traditional)'}],
- 'coordinates': {'latitude': 35.0808088832532, 'longitude': -106.619402244687},
+frontier_restaurant = {
  'display_phone': '(505) 266-0550',
  'distance': 4033.6583235266075,
  'id': 'frontier-restaurant-albuquerque-2',
  'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/M9L2z6-G0NobuDJ6YTh6VA/o.jpg',
  'is_closed': True,
- 'location': {'address1': '2400 Central Ave SE',
-  'address2': '',
-  'address3': '',
-  'city': 'Albuquerque',
-  'country': 'US',
-  'display_address': ['2400 Central Ave SE', 'Albuquerque, NM 87106'],
-  'state': 'NM',
-  'zip_code': '87106'},
  'name': 'Frontier Restaurant',
  'phone': '+15052660550',
  'price': '$',
  'rating': 4.0,
  'review_count': 1369,
- 'transactions': [],
- 'url': 'https://www.yelp.com/biz/frontier-restaurant-albuquerque-2?adjust_creative=SYc8R4Gowqru5h4SBKZXsQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=SYc8R4Gowqru5h4SBKZXsQ'}
+}
 ```
 
-And once again, the attributes of the dictionaries above look like the following.
+Now that we are familiar with the data, we can get to the fun stuff. Let's create conditional statements that allow us to decide whether a restaurant has enough reviews for us to feel comfortable with its rating. This means that we want to make sure there is enough data points to decide if the rating is a statistically relevant deciding factor and not an outlier. We are data scientists, after all!
 
 
 ```python
-fork_fig.keys()
+fork_fig_rating_relevance = None
+frontier_restaurant_rating_relevance = None
+# write conditional statements here to assign a True or False value to each restaurant rating relevance variable
+# a rating is only relevant if there are over 750 reviews
+
+if fork_fig['review_count'] > 750:
+    fork_fig_rating_relevance = True
+else:
+    fork_fig_rating_relevance = False
+    
+if frontier_restaurant['review_count'] > 750:
+    frontier_restaurant_rating_relevance = True
+else:
+    frontier_restaurant_rating_relevance = False
+print(fork_fig_rating_relevance, frontier_restaurant_rating_relevance)
 ```
 
+    False True
 
 
+## Using for loops with conditionals
 
-    dict_keys(['categories', 'coordinates', 'display_phone', 'distance', 'id', 'image_url', 'is_closed', 'location', 'name', 'phone', 'price', 'rating', 'review_count', 'transactions', 'url'])
-
-
-
-### Writing functions with conditionals
-
-Let's write a function called `better_restaurant` that provided two restaurants, returns the restaurant with the better rating.  The first argument is `restaurant` and the second argument is `alternative`.  
+Let's write a for loop that iterates over a list of restaurants and returns the restaurant with the better rating. 
 
 
 ```python
-def better_restaurant(restaurant, alternative):
-    if restaurant['rating'] > alternative['rating']:
-        return restaurant
-    return alternative
+restuarnts = [fork_fig, frontier_restaurant]
 ```
 
 
 ```python
-print(better_restaurant(frontier_restaurant, fork_fig)['name']) # 'Fork & Fig'
-print(better_restaurant(fork_fig, frontier_restaurant)['name']) # 'Fork & Fig'
+highest_rated = None
+# write your for loop here using the list of restuarants above
+# assign highest_rated the restaurant with highest rating
+for rest in restuarnts:
+    if highest_rated and highest_rated['rating'] < rest['rating']:
+        highest_rated = rest
+    elif not highest_rated:
+        highest_rated = rest
+print(highest_rated)
+
+```
+
+    {'display_phone': '(505) 881-5293', 'id': 'fork-and-fig-albuquerque', 'image_url': 'https://s3-media1.fl.yelpcdn.com/bphoto/_-DpXKfS3jv6DyA47g6Fxg/o.jpg', 'is_closed': False, 'name': 'Fork & Fig', 'phone': '+15058815293', 'price': '$$', 'rating': 4.5, 'review_count': 604}
+
+
+
+```python
+print(highest_rated['name']) # 'Fork & Fig'
 ```
 
     Fork & Fig
-    Fork & Fig
 
 
-Let's write a function called `cheaper_restaurant` that returns the restaurant with the lower price, that is the restaurant that has fewer `'$'` signs.  The first argument should be named `restaurant` and the second argument should be named `alternative`.
-
-
-```python
-def cheaper_restaurant(restaurant, alternative):
-    if len(restaurant['price']) < len(alternative['price']):
-        return restaurant
-    if len(restaurant['price']) > len(alternative['price']):
-        return alternative
-    return "Restaurants are the same price!"
-```
+Now do the same for the most reviewed restaurant and the cheapest restaurant.
 
 
 ```python
-print(cheaper_restaurant(fork_fig, frontier_restaurant)['name']) # 'Frontier Restaurant'
-print(cheaper_restaurant(frontier_restaurant, fork_fig)['name']) # 'Frontier Restaurant'
+most_reviewed = None
+# write your for loop here using the list of restuarants above
+# assign most_reviewed the restaurant with highest number of reviews
+for rest in restuarnts:
+    if most_reviewed and most_reviewed['review_count'] < rest['review_count']:
+        most_reviewed = rest
+    elif not most_reviewed:
+        most_reviewed = rest
+print(most_reviewed)
+
 ```
 
-    Frontier Restaurant
-    Frontier Restaurant
+    {'display_phone': '(505) 266-0550', 'distance': 4033.6583235266075, 'id': 'frontier-restaurant-albuquerque-2', 'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/M9L2z6-G0NobuDJ6YTh6VA/o.jpg', 'is_closed': True, 'name': 'Frontier Restaurant', 'phone': '+15052660550', 'price': '$', 'rating': 4.0, 'review_count': 1369}
 
 
-### Conditionals and Loops
 
-Let's continue our work of conditionals by seeing how they can be combined with loops. Let's write a function called `open_restaurants` that takes in a list of restaurants as an argument and returns a list of only the restaurants that are not closed.
+```python
+cheapest_restaurant = None
+# write your for loop here using the list of restuarants above
+# assign cheapest_restaurant the restaurant with the fewest dollar signs
+for rest in restuarnts:
+    if cheapest_restaurant and len(cheapest_restaurant['price']) > len(rest['price']):
+        cheapest_restaurant = rest
+    elif not cheapest_restaurant:
+        cheapest_restaurant = rest
+print(cheapest_restaurant)
+```
+
+    {'display_phone': '(505) 266-0550', 'distance': 4033.6583235266075, 'id': 'frontier-restaurant-albuquerque-2', 'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/M9L2z6-G0NobuDJ6YTh6VA/o.jpg', 'is_closed': True, 'name': 'Frontier Restaurant', 'phone': '+15052660550', 'price': '$', 'rating': 4.0, 'review_count': 1369}
+
+
+
+Next, use a for loop to return a list of restaurants that are currently open. 
 
 
 ```python
@@ -159,19 +167,7 @@ restaurants = [fork_fig, frontier_restaurant]
 ```
 
 
-```python
-def open_restaurants(restaurants):
-    open = []
-    for restaurant in restaurants:
-        if not restaurant['is_closed']:
-            open.append(restaurant)
-    return open
-```
 
-
-```python
-len(open_restaurants(restaurants)) # 1
-```
 
 
 
@@ -182,16 +178,19 @@ len(open_restaurants(restaurants)) # 1
 
 
 ```python
-open_restaurants(restaurants)[0]['name'] # 'Fork & Fig'
+open_restaurants = []
+# write a for loop and conditional statements to choose only the open restaurants from the list of restaurants
+# append the open restaurants to the list open_restaurants
+for rest in restuarnts:
+    if not rest['is_closed']:
+        open_restaurants.append(rest)
+        
+print(open_restaurants)
 ```
 
-
-
-
-    'Fork & Fig'
-
+    [{'display_phone': '(505) 881-5293', 'id': 'fork-and-fig-albuquerque', 'image_url': 'https://s3-media1.fl.yelpcdn.com/bphoto/_-DpXKfS3jv6DyA47g6Fxg/o.jpg', 'is_closed': False, 'name': 'Fork & Fig', 'phone': '+15058815293', 'price': '$$', 'rating': 4.5, 'review_count': 604}]
 
 
 ### Summary
 
-Great! In this lab we saw how to use functions with multiple arguments and conditionals to return the restaurant we want based on the questions we are trying to answer. We also saw how to use conditionals to select only certain elements of an array based on a condition we want our elements to meet.
+Great! In this lab we saw how to use for loops and conditions to return the restaurant(s) we want based on the questions we are trying to answer (i.e. which is highest rated, most reviewed, or open). We will continue to use conditional statements to create more dynamic and efficient code as we learn more and more about Python and programming.
