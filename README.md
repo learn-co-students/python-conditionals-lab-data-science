@@ -85,6 +85,7 @@ for rest in restuarnts:
     elif not highest_rated:
         highest_rated = rest
 print(highest_rated)
+
 ```
 
     {'display_phone': '(505) 881-5293', 'id': 'fork-and-fig-albuquerque', 'image_url': 'https://s3-media1.fl.yelpcdn.com/bphoto/_-DpXKfS3jv6DyA47g6Fxg/o.jpg', 'is_closed': False, 'name': 'Fork & Fig', 'phone': '+15058815293', 'price': '$$', 'rating': 4.5, 'review_count': 604}
@@ -111,6 +112,7 @@ for rest in restuarnts:
     elif not most_reviewed:
         most_reviewed = rest
 print(most_reviewed)
+
 ```
 
     {'display_phone': '(505) 266-0550', 'distance': 4033.6583235266075, 'id': 'frontier-restaurant-albuquerque-2', 'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/M9L2z6-G0NobuDJ6YTh6VA/o.jpg', 'is_closed': True, 'name': 'Frontier Restaurant', 'phone': '+15052660550', 'price': '$', 'rating': 4.0, 'review_count': 1369}
@@ -130,6 +132,7 @@ print(cheapest_restaurant)
 ```
 
     {'display_phone': '(505) 266-0550', 'distance': 4033.6583235266075, 'id': 'frontier-restaurant-albuquerque-2', 'image_url': 'https://s3-media4.fl.yelpcdn.com/bphoto/M9L2z6-G0NobuDJ6YTh6VA/o.jpg', 'is_closed': True, 'name': 'Frontier Restaurant', 'phone': '+15052660550', 'price': '$', 'rating': 4.0, 'review_count': 1369}
+
 
 
 Next, use a for loop to return a list of restaurants that are currently open. 
@@ -155,6 +158,21 @@ frontier_restaurant['is_closed'] # True
 
 
     True
+
+
+
+
+```python
+restaurants = [fork_fig, frontier_restaurant]
+```
+
+
+
+
+
+
+
+    1
 
 
 
